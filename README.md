@@ -1,4 +1,5 @@
 # nuxt-svgicon
+In Progress!!!
 Nuxt module for [vue-svgicon](https://github.com/MMF-FE/vue-svgicon)
 
 ##TODO

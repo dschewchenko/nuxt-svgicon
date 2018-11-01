@@ -1,0 +1,29 @@
+{
+  "name": "nuxt-svgicon",
+  "version": "1.0.1",
+  "description": "Nuxt module for vue-svgicon",
+  "main": "lib/index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "dependencies": {
+    "vue": "^2.5.17",
+    "vue-svgicon": "3.2.1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/dschewchenko/nuxt-svgicon.git"
+  },
+  "keywords": [
+    "nuxt",
+    "vue",
+    "svg",
+    "svgicon"
+  ],
+  "author": "dschewchenko",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/dschewchenko/nuxt-svgicon/issues"
+  },
+  "homepage": "https://github.com/dschewchenko/nuxt-svgicon#readme"
+}

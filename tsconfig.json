@@ -1,0 +1,20 @@
+{
+  "compilerOptions": {
+    "module": "es2015",
+    "target": "es2015",
+    "moduleResolution": "node",
+    "experimentalDecorators": true,
+    "noImplicitAny": false,
+    "noImplicitThis": false,
+    "strictNullChecks": false,
+    "removeComments": true,
+    "suppressImplicitAnyIndexErrors": true,
+    "allowSyntheticDefaultImports": true,
+    "baseUrl": "./",
+    "allowJs": true,
+    "watch": false,
+    "outDir": "./dist"
+  },
+  "exclude": ["node_modules", "**/*.spec.ts"],
+  "include": ["lib/**/*"]
+}

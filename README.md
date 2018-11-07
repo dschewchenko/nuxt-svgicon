@@ -1,8 +1,12 @@
-# nuxt-svgicon
-Nuxt module for [vue-svgicon](https://github.com/MMF-FE/vue-svgicon)
-In short - nuxt module to create svg icon components.
+# nuxt-svgicon module
 
-All svg icons will be inlined in html, when You use SSR or generate.
+[![npm version](https://badge.fury.io/js/nuxt-svgicon.svg)](https://badge.fury.io/js/nuxt-svgicon)
+
+Nuxt module for integration [vue-svgicon](https://github.com/MMF-FE/vue-svgicon)
+In short - nuxt module to create svg icon components.
+At build or starting dev it will generate icons.
+
+All svg icons will be inlined in html, when You use SSR or generate :)
 
 I have modified vue-svgicon builder for better support sub-directories.
 

@@ -56,8 +56,3 @@ If `true` will automatically add `innersvg-polyfill` for supporting IE and old b
 ### renameStyles
 By default I have disabled renaming of svg styles `fill` and `stroke`. Because in some svg it doesn't work properly. If true, than You can use currentColor feature for coloring icons.
 
-
-##TODO
-- Add description
-- Add instructions
-- Add link and big thanks to https://github.com/MMF-FE/vue-svgicon

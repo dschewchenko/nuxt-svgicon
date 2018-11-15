@@ -1,8 +1,8 @@
 import {join, normalize, basename, resolve, sep} from 'path';
-import fs from 'fs-plus';
-import colors from 'colors';
-import glob from 'glob';
-import Svgo from 'svgo';
+import * as fs from 'fs-plus';
+import * as colors from 'colors';
+import * as glob from 'glob';
+import * as Svgo from 'svgo';
 
 interface OptimizedSvg {
   data: string;

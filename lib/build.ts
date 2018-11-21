@@ -1,8 +1,8 @@
 import {join, normalize, basename, resolve, sep} from 'path';
-import * as fs from 'fs-plus';
-import * as colors from 'colors';
-import * as glob from 'glob';
-import * as Svgo from 'svgo';
+import fs from 'fs-plus';
+import colors from 'colors';
+import glob from 'glob';
+import Svgo from 'svgo';
 
 interface OptimizedSvg {
   data: string;
@@ -102,7 +102,7 @@ export default function build(options: Options): Promise<void> {
           );
 
           if (ix === files.length - 1) {
-            generateIndex(options, files, options.subDir);
+            generateIndex(options, files);
             resolve();
           }
         } catch (err) {
@@ -155,7 +155,10 @@ function generateIndex(opts: Options, files: string[], subDir = '') {
   files.forEach(file => {
     let name = basename(file).split('.')[0];
     let filePath = getFilePath(opts.sourcePath, file, subDir);
+    filePath = filePath.replace(opts.subDir + '/', '');
     let dir = filePath.split('/')[0];
+    console.log('filePath', filePath);
+    console.log(dir);
 
     if (dir) {
       if (!dirMap[dir]) {
@@ -163,6 +166,7 @@ function generateIndex(opts: Options, files: string[], subDir = '') {
         content += isES6
             ? `import './${dir}'\n`
             : `require('./${dir}')\n`;
+        console.log(content);
       }
       dirMap[dir].push(file);
     } else {
@@ -173,7 +177,7 @@ function generateIndex(opts: Options, files: string[], subDir = '') {
   });
 
   fs.writeFileSync(
-      join(opts.targetPath, `index.${opts.ext}`),
+      join(opts.targetPath, subDir.replace(opts.sourcePath, ''), `index.${opts.ext}`),
       content,
       'utf-8',
   );

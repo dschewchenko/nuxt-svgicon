@@ -10,6 +10,8 @@ All svg icons will be inlined in html, when You use SSR or generate :)
 
 I have modified vue-svgicon builder for better support sub-directories.
 
+It works only in nuxt 2
+
 ## Install
 
 ```bash

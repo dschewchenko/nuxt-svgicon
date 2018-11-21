@@ -162,14 +162,14 @@ function generateIndex(opts: Options, files: string[], subDir = '') {
       if (!dirMap[dir]) {
         dirMap[dir] = [];
         content += isES6
-            ? `import './${dir}'\n`
-            : `require('./${dir}')\n`;
+            ? `import './${dir}.js'\n`
+            : `require('./${dir}.js')\n`;
       }
       dirMap[dir].push(file);
     } else {
       content += isES6
-          ? `import './${filePath}${name}'\n`
-          : `require('./${filePath}${name}')\n`;
+          ? `import './${filePath}${name}.js'\n`
+          : `require('./${filePath}${name}.js')\n`;
     }
   });
 

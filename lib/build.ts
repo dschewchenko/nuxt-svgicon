@@ -157,8 +157,6 @@ function generateIndex(opts: Options, files: string[], subDir = '') {
     let filePath = getFilePath(opts.sourcePath, file, subDir);
     filePath = filePath.replace(opts.subDir + '/', '');
     let dir = filePath.split('/')[0];
-    console.log('filePath', filePath);
-    console.log(dir);
 
     if (dir) {
       if (!dirMap[dir]) {
@@ -166,7 +164,6 @@ function generateIndex(opts: Options, files: string[], subDir = '') {
         content += isES6
             ? `import './${dir}'\n`
             : `require('./${dir}')\n`;
-        console.log(content);
       }
       dirMap[dir].push(file);
     } else {

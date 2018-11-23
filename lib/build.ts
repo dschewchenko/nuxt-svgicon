@@ -162,8 +162,8 @@ function generateIndex(opts: Options, files: string[], subDir = '') {
       if (!dirMap[dir]) {
         dirMap[dir] = [];
         content += isES6
-            ? `import './${dir}.js'\n`
-            : `require('./${dir}.js')\n`;
+            ? `import './${dir}/index.js'\n`
+            : `require('./${dir}/index.js')\n`;
       }
       dirMap[dir].push(file);
     } else {

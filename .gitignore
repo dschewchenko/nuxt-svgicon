@@ -120,3 +120,7 @@ fabric.properties
 .idea/httpRequests
 
 .idea/
+
+dist
+
+package-lock.json

@@ -1,5 +1,6 @@
 import {join, normalize, basename, resolve, sep} from 'path';
 import fs from 'fs-plus';
+import {statSync, existsSync} from 'fs';
 import colors from 'colors';
 import glob from 'glob';
 import Svgo from 'svgo';
@@ -29,20 +30,15 @@ export interface Options {
  * build svg icon
  */
 export default function build(options: Options): Promise<void> {
-  return new Promise((resolve, reject) => {
-    // delete previous icons
-    fs.removeSync(options.targetPath);
-
+  return new Promise((res, reject) => {
     // the template file which to generate icon files
     const tplPath = options.tpl
         ? join(process.cwd(), options.tpl)
-        : join(
-            process.cwd(),
-            `./node_modules/vue-svgicon/default/icon.tpl${options.es6 ? '.es6' : ''}.txt`);
+        : resolve(__dirname, `..${sep}default${sep}icon.tpl${options.es6 ? '.es6' : ''}.txt`);
     const tpl = fs.readFileSync(tplPath, 'utf8');
     const svgo = new Svgo(getSvgoConfig(options.svgo));
 
-    glob(join(options.sourcePath, '**/*.svg'), function(
+    glob(join(options.sourcePath, `**${sep}*.svg`), function(
         err: any,
         files: string[],
     ) {
@@ -51,12 +47,27 @@ export default function build(options: Options): Promise<void> {
         return;
       }
 
-      files = files.map(f => normalize(f));
-
-      files.forEach(async (filename, ix) => {
-        let name = basename(filename).split('.')[0];
+      files
+          .map(filename => normalize(filename))
+          .map(filename => {
+            const name = basename(filename).split('.').slice(0, -1).join('.');
+            const filePath = getFilePath(options.sourcePath, filename, options.subDir);
+            const fullPath = join(
+                options.targetPath,
+                filePath,
+                name + `.${options.ext}`,
+            );
+            return {
+              filename,
+              name,
+              filePath,
+              fullPath,
+              lastMod: statSync(filename).mtimeMs
+            }
+          })
+          .filter(isFileChanged)
+          .forEach(async ({filename, name, filePath, fullPath, lastMod}, ix) => {
         let svgContent = fs.readFileSync(filename, 'utf-8');
-        let filePath = getFilePath(options.sourcePath, filename, options.subDir);
         let result: OptimizedSvg = (await svgo.optimize(svgContent)) as OptimizedSvg;
         let data = result.data
             .replace(/<svg[^>]+>/gi, '')
@@ -85,25 +96,18 @@ export default function build(options: Options): Promise<void> {
           height: parseFloat(result.info.height) || 16,
           viewBox: `'${viewBox}'`,
           data: data,
+          lastMod: lastMod
         });
 
         try {
-          fs.writeFileSync(
-              join(
-                  options.targetPath,
-                  filePath,
-                  name + `.${options.ext}`,
-              ),
-              content,
-              'utf-8',
-          );
+          fs.writeFileSync(fullPath, content, 'utf-8');
           console.log(
               colors.yellow(`Generated icon: ${filePath}${name}`),
           );
 
           if (ix === files.length - 1) {
             generateIndex(options, files);
-            resolve();
+            res();
           }
         } catch (err) {
           reject(err);
@@ -111,6 +115,25 @@ export default function build(options: Options): Promise<void> {
       });
     });
   });
+}
+
+function isFileChanged({filePath, fullPath, lastMod}) {
+  if(!existsSync(join(process.cwd(), fullPath))) {
+    return true;
+  }
+
+  try {
+    const file = fs.readFileSync(
+        fullPath,
+        'utf-8',
+    );
+
+    const matches = file.match(/lastMod: '(\d+)'/i);
+    const lastModOld = + matches[1];
+    return lastMod !== lastModOld;
+  } catch (e) {
+    return true;
+  }
 }
 
 // simple template compile
@@ -134,7 +157,7 @@ function getFilePath(sourcePath: string, filename: string, subDir = '') {
     filePath = filePath.substr(1);
   }
 
-  return filePath.replace(/\\/g, '/');
+  return filePath.replace(/[\/\\]/g, sep);
 }
 
 // generate index.js, which import all icons
@@ -193,7 +216,7 @@ function generateIndex(opts: Options, files: string[], subDir = '') {
 // get svgo config
 function getSvgoConfig(svgo?: string | { [key: string]: any }) {
   if (!svgo) {
-    return require('vue-svgicon/default/svgo');
+    return require('../default/svgo');
   } else if (typeof svgo === 'string') {
     return require(join(process.cwd(), svgo));
   } else {
@@ -228,7 +251,7 @@ function addPid(content: string) {
   return content;
 }
 
-// rename fill and stroke. (It can restroe in vue-svgicon)
+// rename fill and stroke. (It can restore in vue-svgicon)
 function renameStyle(content: string) {
   let styleShaeReg = /<(path|rect|circle|polygon|line|polyline|g|ellipse).+>/gi;
   let styleReg = /fill=\"|stroke="/gi;

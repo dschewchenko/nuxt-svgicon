@@ -1,6 +1,6 @@
 {
   "name": "nuxt-svgicon",
-  "version": "1.2.0",
+  "version": "1.2.1",
   "description": "Nuxt module for vue-svgicon",
   "main": "dist/index.js",
   "scripts": {
@@ -40,6 +40,7 @@
   "homepage": "https://github.com/dschewchenko/nuxt-svgicon#readme",
   "files": [
     "dist/",
+    "default/",
     "README.md"
   ]
 }

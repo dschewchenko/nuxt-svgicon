@@ -1,6 +1,6 @@
 {
   "name": "nuxt-svgicon",
-  "version": "1.2.3",
+  "version": "1.2.4",
   "description": "Nuxt module for vue-svgicon",
   "main": "dist/index.js",
   "publishConfig": {

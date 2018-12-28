@@ -128,7 +128,7 @@ function isFileChanged({filePath, fullPath, lastMod}) {
         'utf-8',
     );
 
-    const matches = file.match(/lastMod: '(\d+)'/i);
+    const matches = file.match(/lastMod: '(\d+(?:\.\d+)?)'/i);
     const lastModOld = + matches[1];
     return lastMod !== lastModOld;
   } catch (e) {

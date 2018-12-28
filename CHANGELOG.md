@@ -1,5 +1,10 @@
 # nuxt-svgicon Changelog
 
+## 1.2.4
+### Bug fixes
+
+* lastMod can be with nanoseconds
+
 ## 1.2.3
 ### Bug fixes
 

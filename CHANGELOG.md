@@ -1,5 +1,10 @@
 # nuxt-svgicon Changelog
 
+## 1.2.3
+### Bug fixes
+
+* build only once(use hook)
+
 ## 1.2.2
 ### Bug fixes
 

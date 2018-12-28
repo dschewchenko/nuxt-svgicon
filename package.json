@@ -1,8 +1,11 @@
 {
   "name": "nuxt-svgicon",
-  "version": "1.2.1",
+  "version": "1.2.2",
   "description": "Nuxt module for vue-svgicon",
   "main": "dist/index.js",
+  "publishConfig": {
+    "registry": "https://registry.npmjs.com"
+  },
   "scripts": {
     "prepublish": "npm run build",
     "build": "rm -rf ./dist && tsc"
@@ -41,6 +44,7 @@
   "files": [
     "dist/",
     "default/",
+    "CHANGELOG.md",
     "README.md"
   ]
 }

@@ -1,3 +1,5 @@
+#### Please, use (svg-sprite-module from nuxt-comunity)(https://github.com/nuxt-community/svg-sprite-module)
+
 # nuxt-svgicon module
 
 [![npm version](https://badge.fury.io/js/nuxt-svgicon.svg)](https://badge.fury.io/js/nuxt-svgicon)
